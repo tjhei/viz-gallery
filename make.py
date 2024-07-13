@@ -1,4 +1,5 @@
 from jinja2 import Template
+import os
 
 template_str = """
 <!DOCTYPE html>
@@ -66,8 +67,8 @@ template_str = """
 <body>
     <div class="header">
         <div class="title-bar">
+            <a class="home-button" href="index.html">Home</a>&nbsp;
             <h1>{{ title }}</h1>
-            <a class="home-button" href="index.html">Home</a>
         </div>
         <div class="tabs">
             {% for tab in tabs %}
@@ -110,11 +111,68 @@ template_str = """
 </html>
 """
 
+index_template_str = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index of Generated Pages</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .page-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .page-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .page-item img {
+            width: 50px;
+            height: 50px;
+            margin-right: 20px;
+        }
+        .page-item a {
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Index of Generated Pages</h1>
+    <ul class="page-list">
+        {% for page in pages %}
+        <li class="page-item">
+            <img src="{{ page.image }}" alt="Image for {{ page.title }}">
+            <a href="{{ page.filename }}">{{ page.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+"""
+
 def generate_page(title, tabs, output_filename):
     template = Template(template_str)
     html_content = template.render(title=title, tabs=tabs)
     
     with open(output_filename, 'w') as f:
+        f.write(html_content)
+
+def generate_index(pages):
+    template = Template(index_template_str)
+    html_content = template.render(pages=pages)
+    
+    with open('index.html', 'w') as f:
         f.write(html_content)
 
 # Example usage
@@ -146,7 +204,21 @@ pages = [
     }
 ]
 
+# Generate individual pages
 for page in pages:
     generate_page(page['title'], page['tabs'], page['output_filename'])
 
-print("Pages generated successfully!")
+# Prepare data for index.html generation
+index_pages = [
+    {
+        'title': page['title'],
+        'filename': page['output_filename'],
+        'image': f"{os.path.splitext(page['output_filename'])[0]}.jpg"  # Assumes images are named like the HTML files
+    }
+    for page in pages
+]
+
+# Generate index.html
+generate_index(index_pages)
+
+print("Pages and index generated successfully!")
