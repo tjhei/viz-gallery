@@ -189,14 +189,15 @@ pages = [
     {
         'title': 'Cascadia subduction model',
         'tabs': [
-            {'name': 'Tab A', 'url': 'https://example.com/pageA'},
-            {'name': 'Tab B', 'url': 'https://example.com/pageB'}
+            {'name': 'Glance', 'url': 'https://f.tjhei.info/glance/?name=cascadia_subduction-v1.glance&url=https://f.tjhei.info/view-cascadia-model-menno/cascadia_subduction_v1.glance'},
+            {'name': 'Information', 'url': 'cascadia-info.html'}
         ],
         'output_filename': 'cascadia.html'
     },
     {
         'title': 'ASPECT 3d convection cookbook',
         'tabs': [
+            {'name': 'vtkjs', 'url': 'https://f.tjhei.info/ase/?fileURL=https://f.tjhei.info/viz-gallery/convection3d/solution0021.vtkjs'},
             {'name': 'Glance', 'url': 'https://f.tjhei.info/glance/?name=view-convection_box.glance&url=https://f.tjhei.info/view-convection-box/convection_box.glance'},
             {'name': 'Information', 'url': 'convection3d-info.html'}
         ],
