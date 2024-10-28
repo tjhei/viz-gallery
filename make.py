@@ -117,7 +117,7 @@ index_template_str = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index of Generated Pages</title>
+    <title>Visualization Gallery Page Index</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -137,8 +137,8 @@ index_template_str = """
             margin: 10px 0;
         }
         .page-item img {
-            width: 50px;
-            height: 50px;
+            width: 100px;
+            height: 100px;
             margin-right: 20px;
         }
         .page-item a {
@@ -157,6 +157,8 @@ index_template_str = """
         </li>
         {% endfor %}
     </ul>
+<p> This visualization gallery is made by <a href="https://www.math.clemson.edu/~heister/">Timo Heister</a>
+and is partly supported by the NSF through the <a href="https://integrated-earth.github.io/">Integrated Earth FRES project.</a>.
 </body>
 </html>
 """
@@ -178,18 +180,28 @@ def generate_index(pages):
 # Example usage
 pages = [
     {
-        'title': 'Test page 1',
+        'title': 'Global Snapshot',
         'tabs': [
-            {'name': 'Tab 1', 'url': 'https://example.com/page1'},
-            {'name': 'Tab 2', 'url': 'https://example.com/page2'},
-            {'name': 'Tab 3', 'url': 'https://example.com/page3'}
+            {'name': 'Video', 'url': 'global-video.html'},
+            {'name': 'Glance', 'url': 'https://f.tjhei.info/glance/?name=spherical-cover-v2.glance&url=https://f.tjhei.info/view-spherical-cover/spherical-cover-v2.glance'},
+            {'name': 'Information', 'url': 'global-info.html'}
         ],
-        'output_filename': 'test1.html'
+        'output_filename': 'global.html'
+    },
+    {
+        'title': 'A global starting Earth model',
+        'tabs': [
+            {'name': 'Slabs', 'url': 'https://f.tjhei.info/glance/?name=view-slab2-v1.glance&url=https://f.tjhei.info/view-slab2/v1.glance'},
+            {'name': 'Viscosity', 'url': 'https://f.tjhei.info/glance/?name=view-viscosity-distribution.glance&url=https://f.tjhei.info/view-global-models/viscosity_distribution.glance'},
+            {'name': 'Information', 'url': 'starting-v1-info.html'}
+        ],
+        'output_filename': 'starting-v1.html'
     },
     {
         'title': 'Cascadia subduction model',
         'tabs': [
             {'name': 'Glance', 'url': 'https://f.tjhei.info/glance/?name=cascadia_subduction-v1.glance&url=https://f.tjhei.info/view-cascadia-model-menno/cascadia_subduction_v1.glance'},
+            {'name': 'rotating', 'url': 'https://f.tjhei.info/ase/?fileURL=https://f.tjhei.info/viz-gallery/cascadia/Ridge.vtkjs&orient=90|-90|0'},
             {'name': 'Information', 'url': 'cascadia-info.html'}
         ],
         'output_filename': 'cascadia.html'
@@ -202,7 +214,18 @@ pages = [
             {'name': 'Information', 'url': 'convection3d-info.html'}
         ],
         'output_filename': 'convection3d.html'
+    },
+    {
+        'title': 'deal.II step-90 TraceFEM example',
+        'tabs': [
+            {'name': 'vtkjs', 'url': 'https://f.tjhei.info/ase/v2/?fileURL=https://f.tjhei.info/viz-gallery/step-90-viz/step-90.vtkjs&orient=-90|0|0'},
+            {'name': 'Information', 'url': 'https://www.dealii.org/developer/doxygen/deal.II/step_90.html'}
+        ],
+        'output_filename': 'step-90.html'
     }
+
+
+    
 ]
 
 # Generate individual pages
