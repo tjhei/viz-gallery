@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cascadia subduction model</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            display: flex;
+            flex-direction: column;
+            background-color: #f0f0f0;
+            border-bottom: 1px solid #ccc;
+        }
+        .title-bar {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+        }
+        .home-button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            margin-left: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .tabs {
+            display: flex;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .tab {
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-bottom: none;
+            margin-right: 5px;
+        }
+        .tab.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .content {
+            flex: 1;
+            overflow: hidden;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title-bar">
+            <a class="home-button" href="index.html">Home</a>&nbsp;
+            <h1>Cascadia subduction model</h1>
+        </div>
+        <div class="tabs">
+            
+            <div class="tab" data-tab="Glance" data-url="https://f.tjhei.info/glance/?name=cascadia_subduction-v1.glance&url=https://f.tjhei.info/view-cascadia-model-menno/cascadia_subduction_v1.glance">Glance</div>
+            
+            <div class="tab" data-tab="rotating" data-url="https://f.tjhei.info/ase/?fileURL=https://f.tjhei.info/viz-gallery/cascadia/Ridge.vtkjs&orient=90|-90|0">rotating</div>
+            
+            <div class="tab" data-tab="Information" data-url="cascadia-info.html">Information</div>
+            
+        </div>
+    </div>
+    <div class="content">
+        <iframe id="content-frame" src="https://f.tjhei.info/glance/?name=cascadia_subduction-v1.glance&url=https://f.tjhei.info/view-cascadia-model-menno/cascadia_subduction_v1.glance"></iframe>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.tab');
+            const iframe = document.getElementById('content-frame');
+
+            function updateActiveTab(tab) {
+                if (tab.classList.contains('active')) return; // Ignore clicks on the active tab
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                iframe.src = tab.dataset.url;
+                history.pushState(null, '', `#${tab.dataset.tab}`);
+            }
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => updateActiveTab(tab));
+            });
+
+            // Check the URL hash and set the active tab on page load
+            const hash = window.location.hash;
+            if (hash) {
+                const tab = Array.from(tabs).find(t => t.dataset.tab === hash.substring(1));
+                if (tab) {
+                    updateActiveTab(tab);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
